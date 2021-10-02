@@ -1,4 +1,4 @@
-import React, { Key, ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-//import {Key} from '@material-ui/types'
 // Components
 import Copyright from '../components/Copyright';
 // Gql
@@ -22,24 +21,24 @@ import { login } from '../redux/actions/user.action';
 
 const theme = createTheme();
 
-const Login = (props: { history: string[] }) => {
+const Login = (props) => {
   const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
-      //console.log(result);
+      console.log(result);
       dispatch(login(result.data.login));
       props.history.push('/');
     },
-    onError(err: any) {
-      //console.log(err);
+    onError(err) {
+      console.log(err);
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
   });
 
-  const handleSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement }) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -104,8 +103,8 @@ const Login = (props: { history: string[] }) => {
 
             {Object.keys(errors).length > 0 &&
               Object.values(errors).map((value) => (
-                <Alert severity="error" key={value as Key | null | undefined} sx={{ mb: 1 }}>
-                  {value as ReactNode}
+                <Alert severity="error" key={value} sx={{ mb: 1 }}>
+                  {value}
                 </Alert>
               ))}
           </Box>
