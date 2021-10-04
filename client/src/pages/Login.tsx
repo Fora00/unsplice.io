@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Key, ReactNode, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +21,7 @@ import { login } from '../redux/actions/user.action';
 
 const theme = createTheme();
 
-const Login = (props) => {
+const Login = (props: { history: string[] }) => {
   const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
@@ -34,11 +34,11 @@ const Login = (props) => {
     },
     onError(err) {
       console.log(err);
-      setErrors(err.graphQLErrors[0].extensions.errors);
+      setErrors(err.graphQLErrors[0].extensions?.errors);
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -103,8 +103,8 @@ const Login = (props) => {
 
             {Object.keys(errors).length > 0 &&
               Object.values(errors).map((value) => (
-                <Alert severity="error" key={value} sx={{ mb: 1 }}>
-                  {value}
+                <Alert severity="error" key={value as Key | null | undefined} sx={{ mb: 1 }}>
+                  {value as ReactNode}
                 </Alert>
               ))}
           </Box>
