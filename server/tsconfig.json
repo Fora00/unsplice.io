@@ -3,10 +3,15 @@
     "target": "es6",
     "module": "commonjs",
     "rootDir": "./",
-    "outDir": "./build",
+    "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
-    "allowJs": true
+    "allowJs": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true
   },
-  "include": ["utils", "models", "graphql"]
+  "include": ["utils", "models", "graphql"],
+  "files": ["index.ts"]
 }
