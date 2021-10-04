@@ -6,28 +6,27 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 // redux
 import { useDispatch } from 'react-redux';
-import { overviewPage, classPage } from '../../redux/actions/subPage.action'
-
+import { overviewPage, classPage } from '../../redux/actions/subPage.action';
 
 const MainListItems = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    return (
-        <div>
-            <ListItem button onClick={() => dispatch(overviewPage())} >
-                <ListItemIcon>
-                    <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Overview" />
-            </ListItem>
-            <ListItem button onClick={() => dispatch(classPage())} >
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Class" />
-            </ListItem>
-        </div>
-    )
+  return (
+    <div>
+      <ListItem button onClick={() => dispatch(overviewPage())}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Overview" />
+      </ListItem>
+      <ListItem button onClick={() => dispatch(classPage())}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Class" />
+      </ListItem>
+    </div>
+  );
 };
 
 export default MainListItems;
