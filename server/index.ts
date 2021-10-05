@@ -8,8 +8,8 @@ import { MONGODB } from './config';
 
 dotenv.config();
 
-const filename = process.env.ENV === 'test' ? '.env.test' : '.env';
-dotenv.config({ path: filename });
+// const filename = process.env.ENV === 'test' ? '.env.test' : '.env';
+// dotenv.config({ path: filename });
 
 const server = new ApolloServer({
   typeDefs,

@@ -4,4 +4,4 @@ package-lock.json
 dbFiller.js
 TODO.md
 .env
-.env.test
+.env.*

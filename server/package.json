@@ -9,7 +9,9 @@
     "dev": "nodemon dist/index.js",
     "devIn": "nodemon --exec ts-node ./index.ts",
     "start": "node dist/index.js",
-    "startIn": "ts-node ./index.ts"
+    "startIn": "ts-node ./index.ts",
+    "testEnv": "env-cmd -f .env.test nodemon --exec ts-node ./index.ts",
+    "devEnv": "env-cmd -f .env.development nodemon --exec ts-node ./index.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,7 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "graphql": "^15.6.0",
     "jsonwebtoken": "^8.5.1",
