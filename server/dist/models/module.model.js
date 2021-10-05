@@ -1,5 +1,6 @@
 "use strict";
-const { model, Schema } = require('mongoose');
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
 const contentSchema = {
     number: Number,
     title: String,
@@ -8,7 +9,7 @@ const contentSchema = {
     notionContent: String,
     createdAt: String
 };
-const moduleSchema = new Schema({
+const moduleSchema = new mongoose_1.Schema({
     name: String,
     moduleCode: String,
     desc: String,
@@ -16,4 +17,4 @@ const moduleSchema = new Schema({
     contents: [contentSchema],
     createdAt: String
 });
-module.exports = model('Module', moduleSchema);
+exports.default = (0, mongoose_1.model)('Module', moduleSchema);
