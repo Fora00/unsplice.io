@@ -8,40 +8,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Module = require('../../models/module.model');
-const Program = require('../../models/program.model');
-module.exports = {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const module_model_1 = __importDefault(require("../../models/module.model"));
+const program_model_1 = __importDefault(require("../../models/program.model"));
+exports.default = {
     Query: {
         getModuleList: (_, { programId }) => __awaiter(void 0, void 0, void 0, function* () {
-            const program = yield Program.findById(programId); // ["cs1", "cs2", "cs3"]
+            const program = yield program_model_1.default.findById(programId); // ["cs1", "cs2", "cs3"]
             // Find module where code is ["cs1", "cs2", "cs3"]
-            const modules = yield Module.find({
+            const modules = yield module_model_1.default.find({
                 moduleCode: {
-                    $in: program.moduleCodes
-                }
+                    $in: program.moduleCodes,
+                },
             });
             return modules;
         }),
         getModule: (_, { moduleId }) => __awaiter(void 0, void 0, void 0, function* () {
-            const module = yield Module.findById(moduleId);
+            const module = yield module_model_1.default.findById(moduleId);
             return module;
-        })
+        }),
     },
     Mutation: {
         createModule: (_, { moduleInput: { programId, name, moduleCode, desc } }) => __awaiter(void 0, void 0, void 0, function* () {
             // TODO: Validate user Input
             // Update program's module code array
-            const updatedProgram = yield Program.update({ _id: programId }, { $push: { moduleCodes: moduleCode } });
+            const updatedProgram = yield program_model_1.default.update({ _id: programId }, { $push: { moduleCodes: moduleCode } });
             // create module
-            const newModule = yield Module.create({
+            const newModule = yield module_model_1.default.create({
                 name,
                 moduleCode,
                 desc,
                 progress: 0,
                 contents: [],
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
             });
             return newModule;
-        })
-    }
+        }),
+    },
 };

@@ -1,6 +1,8 @@
-const Module = require('../../models/module.model');
+import Module from '../../models/module.model';
 
-module.exports = {
+interface Q {}
+
+export default {
   Query: {
     getContent: async (_: any, { moduleId, contentId }: any) => {
       const module = await Module.findById(moduleId);

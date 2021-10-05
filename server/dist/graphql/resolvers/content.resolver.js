@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Module = require('../../models/module.model');
-module.exports = {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const module_model_1 = __importDefault(require("../../models/module.model"));
+exports.default = {
     Query: {
         getContent: (_, { moduleId, contentId }) => __awaiter(void 0, void 0, void 0, function* () {
-            const module = yield Module.findById(moduleId);
+            const module = yield module_model_1.default.findById(moduleId);
             const content = module.contents.find((content) => content.id === contentId);
             return content;
         }),
@@ -31,7 +35,7 @@ module.exports = {
                 createdAt: new Date().toISOString(),
             };
             // Update module's content array
-            const updatedModule = yield Module.update({ _id: moduleId }, { $push: { contents: newContent } });
+            const updatedModule = yield module_model_1.default.update({ _id: moduleId }, { $push: { contents: newContent } });
             console.log(newContent);
             return newContent;
         }),

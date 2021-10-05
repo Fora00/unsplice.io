@@ -8,57 +8,61 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const User = require('../../models/user.model');
-const Program = require('../../models/program.model');
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const user_model_1 = __importDefault(require("../../models/user.model"));
+const program_model_1 = __importDefault(require("../../models/program.model"));
 // Gql
-const { UserInputError } = require('apollo-server');
+const apollo_server_1 = require("apollo-server");
 // Auth & Session
-const { SECRET_KEY } = require('../../config.js');
-const { validateLoginInput, validateRegisterInput } = require('../../utils/validators');
-const jwt = require('jsonwebtoken');
+const config_js_1 = require("../../config.js");
+const validators_1 = require("../../utils/validators");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // TODO: Implement Bcrypt
 // Jwt Helper function
 function generateToken(user, userPrograms) {
-    return jwt.sign({
+    return jsonwebtoken_1.default.sign({
         userInfo: user,
-        userPrograms: userPrograms
-    }, SECRET_KEY, { expiresIn: '1h' });
+        userPrograms: userPrograms,
+    }, config_js_1.SECRET_KEY, { expiresIn: '1h' });
 }
-module.exports = {
+exports.default = {
     Query: {
         getClassmates: (_, { programCode }) => __awaiter(void 0, void 0, void 0, function* () {
             // fetch classmates
-            const classmates = yield User.find({ programCodes: programCode });
+            const classmates = yield user_model_1.default.find({ programCodes: programCode });
             return classmates;
-        })
+        }),
     },
     Mutation: {
         login: (_, { email, password }, context, info) => __awaiter(void 0, void 0, void 0, function* () {
             // Validate user data
-            const { errors, valid } = validateLoginInput(email, password);
+            const { errors, valid } = (0, validators_1.validateLoginInput)(email, password);
             if (!valid) {
                 // throw new Error({ errors })
-                throw new UserInputError('Input Error', { errors: errors });
+                throw new apollo_server_1.UserInputError('Input Error', { errors: errors });
             }
             // Handle user data
-            const user = yield User.findOne({ email });
+            const user = yield user_model_1.default.findOne({ email });
             // Handle userprogramCodes
             if (!user) {
                 // throw new Error("User not found")
-                errors.general = "User not found";
-                throw new UserInputError('User not found', { errors: errors });
+                errors.general = 'User not found';
+                throw new apollo_server_1.UserInputError('User not found', { errors: errors });
             }
             // Handle password
             if (password != user.password) {
                 // throw new Error("Wrong credentials")
-                errors.general = "Wrong credentials";
-                throw new UserInputError('Wrong credentials', { errors: errors });
+                errors.general = 'Wrong credentials';
+                throw new apollo_server_1.UserInputError('Wrong credentials', { errors: errors });
             }
             // Handle program data
-            const userPrograms = yield Program.find({
+            const userPrograms = yield program_model_1.default.find({
                 programCode: {
-                    $in: user.programCodes
-                }
+                    $in: user.programCodes,
+                },
             });
             // jwt
             const token = generateToken(user, userPrograms);
@@ -66,28 +70,28 @@ module.exports = {
             return {
                 userInfo: user,
                 userPrograms: userPrograms,
-                token: token
+                token: token,
             };
         }),
         createUser: (_, args, context, info) => __awaiter(void 0, void 0, void 0, function* () {
-            const { email, password, confirmPassword, firstprogramCodes, lastprogramCodes, institution, role, programCode, picture } = args.registerInput;
+            const { email, password, confirmPassword, firstprogramCodes, lastprogramCodes, institution, role, programCode, picture, } = args.registerInput;
             const { github, linkedin, instagram, website } = args.registerInput.socialLinks;
             // Validate user data
-            const { errors, valid } = validateRegisterInput(email, password, confirmPassword);
+            const { errors, valid } = (0, validators_1.validateRegisterInput)(email, password, confirmPassword);
             if (!valid) {
-                throw new UserInputError('Input Error', { errors: errors });
+                throw new apollo_server_1.UserInputError('Input Error', { errors: errors });
             }
             // Make sure email doesn't already exist
-            const user = yield User.findOne({ email });
+            const user = yield user_model_1.default.findOne({ email });
             if (user) {
-                throw new UserInputError('Email is taken', {
+                throw new apollo_server_1.UserInputError('Email is taken', {
                     errors: {
-                        userprogramCodes: 'This email is taken'
-                    }
+                        userprogramCodes: 'This email is taken',
+                    },
                 });
             }
-            // Create user 
-            const newUser = new User({
+            // Create user
+            const newUser = new user_model_1.default({
                 email,
                 password,
                 firstprogramCodes,
@@ -102,27 +106,27 @@ module.exports = {
                     website,
                 },
                 programCodes: [programCode],
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
             });
             const res = yield newUser.save();
             // Return User Info
             return res;
         }),
         swapProgram: (_, { userId, swapIndex }) => __awaiter(void 0, void 0, void 0, function* () {
-            let swappedIndex = "programCodes." + swapIndex.toString();
+            let swappedIndex = 'programCodes.' + swapIndex.toString();
             console.log(swappedIndex);
-            const user = yield User.findById(userId);
-            const programCodes = user.programCodes;
+            const user = yield user_model_1.default.findById(userId);
+            const programCodes = user === null || user === void 0 ? void 0 : user.programCodes;
             console.log(programCodes);
             // [programCodes[0], programCodes[swapIndex]] = [programCodes[swapIndex], programCodes[0]]
             let b = programCodes[0];
             programCodes[0] = programCodes[swapIndex];
             programCodes[swapIndex] = b;
             console.log(programCodes);
-            const userSwapProgram = yield User.findOneAndUpdate({ _id: userId }, {
-                programCodes
+            const userSwapProgram = yield user_model_1.default.findOneAndUpdate({ _id: userId }, {
+                programCodes,
             });
             return userSwapProgram;
-        })
-    }
+        }),
+    },
 };

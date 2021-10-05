@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose');
+import { model, Schema } from 'mongoose';
 
 const contentSchema = {
     number: Number,
@@ -20,4 +20,4 @@ const moduleSchema = new Schema({
     createdAt: String
 })
 
-module.exports = model('Module', moduleSchema);
+export default model('Module', moduleSchema);
