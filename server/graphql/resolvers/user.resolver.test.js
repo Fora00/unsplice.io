@@ -17,6 +17,9 @@ describe('Integration tests', () => {
     .expect(200)
     .end((err,res) => {
       if (err) return done(err);
+      const parsedRes = JSON.parse(res.text);
+      const id = parsedRes.data.login.userInfo.id;
+      expect(id).toEqual("61521ac8cc5587fbf14e3bcf")
       done();
   })
 });

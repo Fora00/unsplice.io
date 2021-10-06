@@ -11,6 +11,8 @@ describe('Integration tests', () => {
     .expect(200)
     .end((err,res) => {
       if (err) return done(err);
+      const parsedRes = JSON.parse(res.text);
+      expect(parsedRes.data.getModuleList).toBeTruthy();
       done();
   })
 });
