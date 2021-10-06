@@ -14,6 +14,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "include": ["utils", "models", "graphql"],
+  "include": ["utils", "models", "graphql", "__test__/module.resolver.test.js", "__test__/user.resolver.test.js"],
   "files": ["index.ts"]
 }

@@ -17,7 +17,6 @@ import 'prismjs/themes/prism-tomorrow.css'; // only needed for code highlighting
 
 const Content = () => {
   const { moduleId, contentId } = useSelector((state) => state.subPage.id);
-  console.log('🚀 ~ file: Content.js ~ line 20 ~ Content ~ moduleId, contentId', moduleId, contentId);
 
   const { loading, data } = useQuery(GET_CONTENT, {
     variables: {
@@ -26,8 +25,6 @@ const Content = () => {
     },
   });
 
-  console.log('moduleID = ', moduleId);
-  console.log('contentID = ', contentId);
 
   // Notion Content
   const [notionPagedata, setNotionPagedata] = useState(null);
