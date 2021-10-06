@@ -24,4 +24,28 @@ describe('Login Component', () => {
     );
     expect(container.firstChild).toMatchSnapshot();
   })
+
+
+  test("should have inputs for email and password", () => {
+    render(    <StaticRouter>
+      <ApolloProvider client={client}>
+        <Provider  store={store}>
+          <Login />
+        </Provider>
+      </ApolloProvider>
+    </StaticRouter>)
+  screen.getByLabelText(/Password/)
+  screen.getByLabelText(/Email Address/)
+  } )
+
+  test("should have sign in button", () => {
+   render(    <StaticRouter>
+      <ApolloProvider client={client}>
+        <Provider  store={store}>
+          <Login />
+        </Provider>
+      </ApolloProvider>
+    </StaticRouter>)
+  screen.getByRole("button",{name: "Sign In"})
+  } )
 })
