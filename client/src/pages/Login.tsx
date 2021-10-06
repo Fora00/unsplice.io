@@ -115,4 +115,4 @@ const Login = (props: { history: string[] }) => {
   );
 };
 
-module.exports = Login;
+export default Login;
