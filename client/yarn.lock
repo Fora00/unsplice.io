@@ -1962,7 +1962,7 @@
     "lz-string" "^1.4.4"
     "pretty-format" "^26.6.2"
 
-"@testing-library/jest-dom@^5.11.4":
+"@testing-library/jest-dom@^5.14.1":
   "integrity" "sha512-dfB7HVIgTNCxH22M1+KU6viG5of2ldoA5ly8Ar8xkezKHKXjRvznCdbMbqjYGgO2xjRbwnR+rR8MLUIqF3kKbQ=="
   "resolved" "https://registry.npmjs.org/@testing-library/jest-dom/-/jest-dom-5.14.1.tgz"
   "version" "5.14.1"
@@ -6997,6 +6997,11 @@
   "version" "26.0.0"
   dependencies:
     "detect-newline" "^3.0.0"
+
+"jest-dom@^4.0.0":
+  "integrity" "sha512-gBxYZlZB1Jgvf2gP2pRfjjUWF8woGBHj/g5rAQgFPB/0K2atGuhVcPO+BItyjWeKg9zM+dokgcMOH01vrWVMFA=="
+  "resolved" "https://registry.npmjs.org/jest-dom/-/jest-dom-4.0.0.tgz"
+  "version" "4.0.0"
 
 "jest-each@^26.6.0", "jest-each@^26.6.2":
   "integrity" "sha512-Mer/f0KaATbjl8MCJ+0GEpNdqmnVmDYqCTJYTvoo7rqmRiDllmp2AYN+06F93nXcY3ur9ShIjS+CO/uD+BbH4A=="

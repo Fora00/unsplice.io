@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect';
 import Login from './../pages/Login';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import userEvent from '@testing-library/user-event'
@@ -6,9 +7,6 @@ import {StaticRouter} from 'react-router-dom'
 import { Provider } from 'react-redux';
 import store from './../redux/store';
 import { userCredentials } from './mocks';
-// import { act } from '@react-dom/test-utils';
-import { ReactDOM } from 'react';
-import AuthRoute from './../utils/AuthRoute'
 import spyed from '../utils/spyfunction';
 
 const client = new ApolloClient({
@@ -38,8 +36,8 @@ describe('Login Component', () => {
         </Provider>
       </ApolloProvider>
     </StaticRouter>)
-  screen.getByLabelText(/Password/)
-  screen.getByLabelText(/Email Address/)
+    expect(screen.getByLabelText(/Password/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Email Address/)).toBeInTheDocument();
   } )
 
   test("should have sign in button", () => {
@@ -50,14 +48,15 @@ describe('Login Component', () => {
         </Provider>
       </ApolloProvider>
     </StaticRouter>)
-  screen.getByRole("button",{name: "Sign In"})
+    expect(screen.getByRole("button",{name: "Sign In"})).toBeInTheDocument()
+
   } )
 });
 
 
 describe('Login Integration Test', () => {
   test("should insert correctly the credentials and submit the login form", () => {
-   const spy = jest.spyOn(spyed, 'play')
+  const valueSpyed=['michael.scott@dunder.co.uk','123456']
 
     render(    <StaticRouter>
       <ApolloProvider client={client}>
@@ -73,7 +72,6 @@ describe('Login Integration Test', () => {
   userEvent.type(emailInput, userCredentials.email)
   userEvent.type(passwordInput, userCredentials.password)
   userEvent.click(submitBtn)
-  expect(spy).toHaveBeenCalled();
-  //console.log("🔮", store.getState())
+  expect(spyed.save).toEqual(expect.arrayContaining(valueSpyed))
 })
 })

@@ -1,6 +1,7 @@
 const spyed = {
-  play() {
-    return true;
+  save:[],
+  triggered(data) {
+    this.save.push(data);
   },
 };
 

