@@ -19,12 +19,17 @@ import { LOGIN_USER } from '../utils/graphql';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions/user.action';
 
+import spyed from '../utils/spyfunction';
+
 const theme = createTheme();
+
 
 const Login = (props: { history: string[] }) => {
   const dispatch = useDispatch();
 
   const [errors, setErrors] = useState({});
+
+
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(proxy, result) {
@@ -42,17 +47,14 @@ const Login = (props: { history: string[] }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    console.log("Δ",data.get('email'))
     loginUser({
       variables: {
         email: data.get('email'),
         password: data.get('password'),
       },
     });
-
-    // console.log({
-    //     email: data.get('email'),
-    //     password: data.get('password'),
-    // });
+    spyed.play()
   };
 
   return (
@@ -115,4 +117,4 @@ const Login = (props: { history: string[] }) => {
   );
 };
 
-export default Login;
+module.exports = Login;
